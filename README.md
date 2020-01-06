@@ -2,8 +2,11 @@
 
 == ylx's golang utils ==
 
-[TOC]
-
+- [YLX的go函数库](#ylx-go---)
+    + [- 一般函数](#------)
+    + [-  字符串处理](#--------)
+    + [-  时间处理](#-------)
+    
 ### - 一般函数
 ```go
 // search a string key from a slice
