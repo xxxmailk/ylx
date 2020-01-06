@@ -1,5 +1,12 @@
+### - 一般函数
+```go
+// search a string key from a slice
+// 如果返回值为负数，表明该slice中不存在该该值
+// 从两端往slice中间进行搜索，加快搜索速度
+func SliceSearchString(s []string, key string) (rs int)
+```
 
-#### △ 字符串处理
+### -  字符串处理
 ```go
 // Capitalize: change first character to upper
 // 首字母字符串大写
@@ -7,7 +14,7 @@ func Capitalize(str string) string
 ```
 
 
-#### △ 时间处理
+### -  时间处理
 ```go
 // return start timestamp in this day
 // 返回本天第一个时间节点的时间戳
