@@ -1,3 +1,8 @@
+#YLX的go函数库
+== ylx's golang utils ==
+
+[TOC]
+
 ### - 一般函数
 ```go
 // search a string key from a slice
