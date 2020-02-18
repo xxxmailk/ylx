@@ -4,8 +4,9 @@
 
 - [YLX的go函数库](#ylx-go---)
     + [- 一般函数](#------)
-    + [-  字符串处理](#--------)
-    + [-  时间处理](#-------)
+    + [- 路径处理](#------)
+    + [- 字符串处理](#--------)
+    + [- 时间处理](#-------)
     
 ### - 一般函数
 ```go
@@ -15,7 +16,22 @@
 func SliceSearchString(s []string, key string) (rs int)
 ```
 
-### -  字符串处理
+### - 路径处理
+```go
+// check dir is exist
+// 检查目录是否存在
+// 如果路径存在 exist = true
+// 如果路径存在且该路径为一个目录 exist = true, isDir = true
+func DirIsExist(path string) (exist bool, isDir bool)
+```
+
+```go
+// check or create dir
+// 如果返回值为nil，路径存在且正确
+// 如果路径不存在，该函数会自动创建路径 mode = 0644
+func CheckOrCreateDir(path string) error
+```
+### - 字符串处理
 ```go
 // Capitalize: change first character to upper
 // 首字母字符串大写
@@ -23,7 +39,7 @@ func Capitalize(str string) string
 ```
 
 
-### -  时间处理
+### - 时间处理
 ```go
 // return start timestamp in this day
 // 返回本天第一个时间节点的时间戳
