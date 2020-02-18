@@ -1,3 +1,3 @@
-module github.com/xxxmailk/ylx
+module ylx
 
 go 1.13
