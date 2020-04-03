@@ -1,6 +1,7 @@
 package http_client
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"encoding/xml"
 	"github.com/sirupsen/logrus"
@@ -12,11 +13,22 @@ func NewHttpClient(logEntry *logrus.Entry, headerFunc func(request *fasthttp.Req
 	c.logger = logEntry
 	c.headerFunc = headerFunc
 	c.preFunc = preFunc
+	c.client = &fasthttp.Client{}
+	return c
+}
+
+func NewTlsClient(logEntry *logrus.Entry, skipHostVerify bool, headerFunc func(request *fasthttp.Request, log *logrus.Entry), preFunc func(sendBody interface{}, log *logrus.Entry)) *HttpClient {
+	c := new(HttpClient)
+	c.logger = logEntry
+	c.headerFunc = headerFunc
+	c.preFunc = preFunc
+	c.client = &fasthttp.Client{TLSConfig: &tls.Config{InsecureSkipVerify: skipHostVerify}}
 	return c
 }
 
 type HttpClient struct {
 	header     []byte
+	client     *fasthttp.Client
 	logger     *logrus.Entry
 	headerFunc func(request *fasthttp.Request, log *logrus.Entry)
 	preFunc    func(sendBody interface{}, log *logrus.Entry)
