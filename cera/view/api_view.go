@@ -6,6 +6,8 @@ import (
 	"log"
 )
 
+type Data map[string]interface{}
+
 type XmlView struct {
 	View
 }

@@ -83,7 +83,7 @@ func newActionId() [16]byte {
 
 type View struct {
 	JinJaTpl bool
-	Data     map[string]string // stored user values
+	Data     Data // stored user values
 	Ctx      *fasthttp.RequestCtx
 	Cookie   *fasthttp.Cookie
 }
