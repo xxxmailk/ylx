@@ -90,7 +90,7 @@ type View struct {
 
 // combine this struct and rewrite those functions to reply http methods
 func (r *View) Init() {
-	r.Data = make(map[string]string)
+	r.Data = make(map[string]interface{})
 }
 
 func (r *View) Before() {}
