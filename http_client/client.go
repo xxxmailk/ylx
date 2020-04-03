@@ -90,7 +90,7 @@ func (p *HttpClient) xmlClient(url, method string, sendBody interface{}, rs inte
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
 
-	if err := fasthttp.Do(req, resp); err != nil {
+	if err := p.client.Do(req, resp); err != nil {
 		p.logger.Errorf("%s request: %s failed, %s", method, url, err.Error())
 		return 500, nil
 	}
@@ -123,7 +123,7 @@ func (p *HttpClient) jsonClient(url, method string, sendBody interface{}, rs int
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
 
-	if err := fasthttp.Do(req, resp); err != nil {
+	if err := p.client.Do(req, resp); err != nil {
 		p.logger.Errorf("%s request: %s failed, %s", method, url, err.Error())
 		return 500, nil
 	}
