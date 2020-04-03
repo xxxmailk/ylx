@@ -5,16 +5,16 @@ import (
 	"log"
 )
 
-type ApiView struct {
+type JsonView struct {
 	View
 }
 
-func (r *ApiView) Render() {
+func (r *JsonView) Render() {
 	r.jsonRender()
 }
 
 // render templates
-func (r *ApiView) jsonRender() {
+func (r *JsonView) jsonRender() {
 	defer r.Ctx.Done()
 	rs, err := json.Marshal(r.Data)
 	log.Println(string(rs))
