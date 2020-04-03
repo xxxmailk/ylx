@@ -7,7 +7,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func NewHttpClient(logEntry *logrus.Entry, headerFunc func(request *fasthttp.Request), preFunc func(sendBody interface{})) *HttpClient {
+func NewHttpClient(logEntry *logrus.Entry, headerFunc func(request *fasthttp.Request, log *logrus.Entry), preFunc func(sendBody interface{}, log *logrus.Entry)) *HttpClient {
 	c := new(HttpClient)
 	c.logger = logEntry
 	c.headerFunc = headerFunc
@@ -18,8 +18,8 @@ func NewHttpClient(logEntry *logrus.Entry, headerFunc func(request *fasthttp.Req
 type HttpClient struct {
 	header     []byte
 	logger     *logrus.Entry
-	headerFunc func(request *fasthttp.Request)
-	preFunc    func(sendBody interface{})
+	headerFunc func(request *fasthttp.Request, log *logrus.Entry)
+	preFunc    func(sendBody interface{}, log *logrus.Entry)
 }
 
 func (p *HttpClient) GetJson(url string, sendBody interface{}, rs interface{}) (statCode int, err error) {
@@ -60,9 +60,15 @@ func (p *HttpClient) xmlClient(url, method string, sendBody interface{}, rs inte
 
 	p.logger.Debugf("sending %s json request to %s", method, url)
 	p.logger.Tracef("sending %s json request to %s request body: %v", method, url, sendBody)
+	if p.preFunc != nil {
+		p.preFunc(sendBody, p.logger)
+	}
 	req.Header.SetContentType("text/xml")
 	req.Header.SetMethod(method)
 	req.SetRequestURI(url)
+	if p.headerFunc != nil {
+		p.headerFunc(req, p.logger)
+	}
 	requestBody, err := xml.Marshal(sendBody)
 	if err != nil {
 		p.logger.Errorf("marshal request xml failed, %w", err)
@@ -84,10 +90,18 @@ func (p *HttpClient) jsonClient(url, method string, sendBody interface{}, rs int
 	defer fasthttp.ReleaseRequest(req)
 	p.logger.Debugf("sending %s json request to %s", method, url)
 	p.logger.Tracef("sending %s json request to %s request body: %v", method, url, sendBody)
-
 	req.Header.SetContentType("application/json")
 	req.Header.SetMethod(method)
 	req.SetRequestURI(url)
+
+	if p.headerFunc != nil {
+		p.headerFunc(req, p.logger)
+	}
+
+	if p.preFunc != nil {
+		p.preFunc(sendBody, p.logger)
+	}
+
 	requestBody, err := json.Marshal(sendBody)
 	if err != nil {
 		p.logger.Errorf("marshal request json failed, %w", err)
