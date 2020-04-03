@@ -6,15 +6,13 @@ import (
 	"log"
 )
 
-type Data map[string]interface{}
-
 type XmlView struct {
 	View
 }
 
 func (r *XmlView) Render() {
 	defer r.Ctx.Done()
-	rs, err := xml.Marshal(r.Data)
+	rs, err := xml.MarshalIndent(r.Data, "", "\t")
 	log.Println(string(rs))
 	if err != nil {
 		_, err := r.Ctx.Write([]byte(err.Error()))
