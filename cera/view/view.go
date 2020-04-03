@@ -83,14 +83,14 @@ func newActionId() [16]byte {
 
 type View struct {
 	JinJaTpl bool
-	Data     map[string]interface{} // stored user values
+	Data     map[string]string // stored user values
 	Ctx      *fasthttp.RequestCtx
 	Cookie   *fasthttp.Cookie
 }
 
 // combine this struct and rewrite those functions to reply http methods
 func (r *View) Init() {
-	r.Data = make(map[string]interface{})
+	r.Data = make(map[string]string)
 }
 
 func (r *View) Before() {}
