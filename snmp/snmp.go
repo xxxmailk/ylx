@@ -8,7 +8,7 @@ import (
 )
 
 // parseDateAndTime extracts a UNIX timestamp from an RFC 2579 DateAndTime.
-func parseDateAndTime(pdu *gosnmp.SnmpPDU) (float64, error) {
+func ParseDateAndTime(pdu *gosnmp.SnmpPDU) (float64, error) {
 	var (
 		v  []byte
 		tz *time.Location
